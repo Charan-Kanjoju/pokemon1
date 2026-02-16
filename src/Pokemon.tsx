@@ -41,10 +41,11 @@ export const Poke = () => {
     isLoading,
     isError,
     error,
-  } = useInfiniteQuery<{ pokemon: Pokemon[]; next: string | null }, Error>({
+  } = useInfiniteQuery({
     queryKey: ["pokemon"],
     queryFn: fetchPokemonPage,
     getNextPageParam: (lastPage) => lastPage.next,
+    initialPageParam: API,
   });
 
   const allPokemon =
