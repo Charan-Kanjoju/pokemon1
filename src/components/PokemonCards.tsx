@@ -1,11 +1,11 @@
-import type { Pokemon } from "./types";
+import type { Pokemon } from "../types";
 
 interface CardProps {
   pokemonData: Pokemon;
   onClick: () => void;
 }
 
-const Cards = ({ pokemonData, onClick }: CardProps) => {
+const PokemonCards = ({ pokemonData, onClick }: CardProps) => {
   const imgSrc =
     pokemonData.sprites.other.dream_world.front_default ||
     pokemonData.sprites.front_default;
@@ -27,4 +27,4 @@ const Cards = ({ pokemonData, onClick }: CardProps) => {
   );
 };
 
-export default Cards;
+export default PokemonCards;
