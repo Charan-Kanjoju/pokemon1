@@ -10,9 +10,9 @@ const fetchPokemonDetail = async (id: string): Promise<Pokemon> => {
   return res.json();
 };
 const InfoBox = ({ label, value }: { label: string; value: string | number }) => (
-  <div className="rounded-xl border-black bg-lime-100 p-3">
-    <p className="text-xs text-gray-600">{label}</p>
-    <p className="text-lg font-semibold">{value}</p>
+  <div className="rounded-xl border-black bg-red-400 p-3">
+    <p className="text-xs text-white">{label}</p>
+    <p className="text-lg font-semibold text-white">{value}</p>
   </div>
 );
 
@@ -49,11 +49,11 @@ export const PokemonDetailPage = () => {
     pokemon.sprites.front_default;
 
   return (
-    <div className="min-h-screen bg-lime-200 px-4 py-8">
+    <div className="min-h-screen bg-gray-50 px-4 py-8">
       <Card className="mx-auto w-full max-w-2xl md:max-w-3xl lg:max-w-5xl transition hover:shadow-lg bg-yellow-50">
         <CardContent className="p-6 md:p-8">
           <div className="mb-6 text-center">
-            <h1 className="mb-2 text-2xl font-bold capitalize md:text-3xl">
+            <h1 className="mb-2 text-2xl font-bold capitalize md:text-3xl text-red-900">
               {pokemon.name}
             </h1>
           </div>
@@ -80,12 +80,12 @@ export const PokemonDetailPage = () => {
 
           
           <div className="mb-6">
-            <h3 className="mb-3 font-semibold">Type</h3>
+            <h3 className="mb-3 font-semibold text-red-900">Type</h3>
             <div className="flex flex-wrap justify-center gap-2">
               {pokemon.types.map((t) => (
                 <span
                   key={t.type.name}
-                  className="rounded-full bg-lime-100 px-4 py-1 text-sm font-semibold capitalize text-black-700"
+                  className="rounded-full bg-red-500 px-4 py-1 text-sm font-semibold capitalize text-white"
                 >
                   {t.type.name}
                 </span>
@@ -95,19 +95,19 @@ export const PokemonDetailPage = () => {
 
           
           <div className="mb-6">
-            <h3 className="mb-3 font-semibold">Stats</h3>
+            <h3 className="mb-3 font-semibold text-red-900">Stats</h3>
             <div className="space-y-3">
               {pokemon.stats.map((s) => (
                 <div key={s.stat.name}>
                   <div className="mb-1 flex justify-between text-xs">
-                    <span className="capitalize text-gray-700">
+                    <span className="capitalize text-red-900">
                       {s.stat.name}
                     </span>
                     <span className="font-semibold">{s.base_stat}</span>
                   </div>
                   <div className="h-2 rounded-full bg-gray-200">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-lime-400 to-lime-600"
+                      className="h-full rounded-full bg-gradient-to-r from-red-400 to-red-600"
                       style={{
                         width: `${Math.min((s.base_stat / 150) * 100, 100)}%`,
                       }}
@@ -120,12 +120,12 @@ export const PokemonDetailPage = () => {
 
        
           <div>
-            <h3 className="mb-3 font-semibold">Abilities</h3>
+            <h3 className="mb-3 font-semibold text-red-900">Abilities</h3>
             <div className="grid gap-2 sm:grid-cols-2">
               {pokemon.abilities.map((a) => (
                 <div
                   key={a.ability.name}
-                  className="rounded bg-lime-100 px-3 py-2 capitalize text-gray-700"
+                  className="rounded bg-red-400 px-3 py-2 capitalize text-white"
                 >
                   {a.ability.name}
                 </div>
@@ -134,7 +134,7 @@ export const PokemonDetailPage = () => {
           </div>
         </CardContent>
 
-        <CardFooter className="flex justify-center p-6 pt-0">
+        <CardFooter className="flex justify-center p-6 pt-0 text-center text-white">
           <Button onClick={() => navigate("/")}>Back to List</Button>
         </CardFooter>
       </Card>
