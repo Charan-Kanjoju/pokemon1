@@ -83,7 +83,7 @@ export const PokemonListingPage = () => {
             placeholder="Search Pokémon..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
+            className="pl-9 bg-gray-200 text-gray-700 focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-lime-100"
           />
         </div>
       </div>
