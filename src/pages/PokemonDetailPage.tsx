@@ -29,6 +29,7 @@ export const PokemonDetailPage = () => {
     queryKey: ["pokemon", id],
     queryFn: () => fetchPokemonDetail(id!),
     enabled: !!id,
+    staleTime: 1000 * 60 * 5,
   });
 
   if (isLoading)

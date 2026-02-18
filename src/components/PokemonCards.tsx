@@ -20,7 +20,7 @@ const PokemonCards = ({ pokemonData, onClick }: CardProps) => {
     <Card className="w-full transition hover:-translate-y-1 hover:shadow-lg bg-yellow-50">
       <CardContent className="flex flex-col items-center p-4">
         <img
-          src={imgSrc ?? ""}
+          src={imgSrc}
           alt={pokemonData.name}
           className="h-24 w-24 object-contain text-black-500 md:h-32 md:w-32"
         />
