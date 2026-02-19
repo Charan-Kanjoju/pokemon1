@@ -2,7 +2,8 @@ import type { UIEvent } from "react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import PokemonCards from "../components/PokemonCards";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
@@ -10,6 +11,9 @@ import type { Pokemon, PokemonListResponse, PokemonListItem } from "../types";
 
 const API = "https://pokeapi.co/api/v2/pokemon?limit=20";
 
+type SearchFormValues = {
+  search: string;
+};
 
 const fetchPokemonPage = async ({
   pageParam = API,
@@ -30,7 +34,6 @@ const fetchPokemonPage = async ({
   return { pokemon: detailedData, next: data.next };
 };
 
-
 const fetchPokemonByName = async (name: string): Promise<Pokemon> => {
   const res = await fetch(
     `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`,
@@ -40,20 +43,25 @@ const fetchPokemonByName = async (name: string): Promise<Pokemon> => {
 };
 
 export const PokemonListingPage = () => {
-  const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState(search);
   const navigate = useNavigate();
 
-  
+  // ✅ React Hook Form
+  const { register, watch } = useForm<SearchFormValues>({
+    defaultValues: { search: "" },
+  });
+
+  const watchedSearch = watch("search");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+
+  // ✅ Debounce logic
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedSearch(search);
+      setDebouncedSearch(watchedSearch);
     }, 1000);
 
     return () => clearTimeout(handler);
-  }, [search]);
+  }, [watchedSearch]);
 
-  
   const {
     data,
     fetchNextPage,
@@ -67,10 +75,9 @@ export const PokemonListingPage = () => {
     queryFn: fetchPokemonPage,
     getNextPageParam: (lastPage) => lastPage.next,
     initialPageParam: API,
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 15,
   });
 
-  
   const {
     data: searchedPokemon,
     isLoading: isSearching,
@@ -90,7 +97,7 @@ export const PokemonListingPage = () => {
     : allPokemon;
 
   const handleScroll = (e: UIEvent<HTMLDivElement>) => {
-    if (debouncedSearch) return; 
+    if (debouncedSearch) return;
 
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
     if (scrollHeight - scrollTop <= clientHeight * 1.5 && hasNextPage) {
@@ -119,8 +126,7 @@ export const PokemonListingPage = () => {
           <Input
             type="text"
             placeholder="Search Pokémon..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            {...register("search")}
             className="pl-9 bg-gray-200 text-gray-700 focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-lime-100"
           />
         </div>

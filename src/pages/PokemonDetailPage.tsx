@@ -26,10 +26,11 @@ export const PokemonDetailPage = () => {
     isError,
     error,
   } = useQuery({
-    queryKey: ["pokemon", id],
+    queryKey: ["pokemon",id],
     queryFn: () => fetchPokemonDetail(id!),
     enabled: !!id,
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 15,
+    //networkMode:"offlineFirst"
   });
 
   if (isLoading)
